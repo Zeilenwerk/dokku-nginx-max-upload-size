@@ -1,0 +1,4 @@
+[plugin]
+description = "dokku plugin for adding client_max_body_size to nginx config"
+version = "0.1.0"
+[plugin.config]

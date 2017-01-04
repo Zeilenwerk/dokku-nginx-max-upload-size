@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -e
+APP="$1"
+export $(pluginhook env-vars $APP | grep MAX_UPLOAD_SIZE) > /dev/null
+if  [ ! -z "$MAX_UPLOAD_SIZE" ]; then
+  perl -pi -e "s/(\s*)(server_name.*;)/\1\2\n\1client_max_body_size $MAX_UPLOAD_SIZE;/g" $DOKKU_ROOT/$APP/nginx.conf
+fi
