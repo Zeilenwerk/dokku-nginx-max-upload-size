@@ -1,8 +1,29 @@
 #!/bin/bash
 
-set -e
+set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
+
+source "$PLUGIN_CORE_AVAILABLE_PATH/nginx-vhosts/functions"
+
 APP="$1"
-export $(pluginhook env-vars $APP | grep MAX_UPLOAD_SIZE) > /dev/null
+
+MAX_UPLOAD_SIZE=`dokku config:get $APP MAX_UPLOAD_SIZE`
+
+CONFIG_FOLDER="$DOKKU_ROOT/$APP/nginx.conf.d"
+
+CONFIG_FILE="$CONFIG_FOLDER/upload.conf"
+
+[[ -d "$CONFIG_FOLDER" ]] || mkdir "$CONFIG_FOLDER"
+
+echo "Writing to $CONFIG_FILE"
+
 if  [ ! -z "$MAX_UPLOAD_SIZE" ]; then
-  perl -pi -e "s/(\s*)(server_name.*;)/\1\2\n\1client_max_body_size $MAX_UPLOAD_SIZE;/g" $DOKKU_ROOT/$APP/nginx.conf
+  echo "-----> Setting max upload size to $MAX_UPLOAD_SIZE"
+  echo "client_max_body_size $MAX_UPLOAD_SIZE;" > $CONFIG_FILE
+else
+  echo "-----> Setting max upload size to 2M"
+  echo "client_max_body_size 2M;" > $CONFIG_FILE
 fi
+
+chown dokku:dokku $CONFIG_FILE
+
+restart_nginx
