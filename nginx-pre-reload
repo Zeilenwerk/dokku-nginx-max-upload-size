@@ -2,11 +2,13 @@
 
 set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 
+source "$PLUGIN_CORE_AVAILABLE_PATH/common/functions"
+source "$PLUGIN_CORE_AVAILABLE_PATH/config/functions"
 source "$PLUGIN_CORE_AVAILABLE_PATH/nginx-vhosts/functions"
 
 APP="$1"
 
-MAX_UPLOAD_SIZE=`dokku config:get $APP MAX_UPLOAD_SIZE`
+eval "$(config_export app "$APP")"
 
 CONFIG_FOLDER="$DOKKU_ROOT/$APP/nginx.conf.d"
 
