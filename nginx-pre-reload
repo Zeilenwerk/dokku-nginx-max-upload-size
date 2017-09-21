@@ -18,10 +18,10 @@ CONFIG_FILE="$CONFIG_FOLDER/upload.conf"
 [[ -d "$CONFIG_FOLDER" ]] || mkdir "$CONFIG_FOLDER"
 
 if  [ -z "$max_upload_size" ]; then
-  dokku_log_info1 "-----> Setting max upload size to 2M"
+  dokku_log_info1 "Setting max upload size to 2M"
   echo "client_max_body_size 2M;" > $CONFIG_FILE
 else
-  dokku_log_info1 "-----> Setting max upload size to $max_upload_size"
+  dokku_log_info1 "Setting max upload size to $max_upload_size"
   echo "client_max_body_size $max_upload_size;" > $CONFIG_FILE
 fi
 
