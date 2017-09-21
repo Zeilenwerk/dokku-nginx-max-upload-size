@@ -6,12 +6,12 @@ source "$PLUGIN_CORE_AVAILABLE_PATH/common/functions"
 source "$PLUGIN_CORE_AVAILABLE_PATH/config/functions"
 source "$PLUGIN_CORE_AVAILABLE_PATH/nginx-vhosts/functions"
 
-local app="$1"; verify_app_name "$app"
+app="$1"; verify_app_name "$app"
 
 eval "$(config_export global)"
 eval "$(config_export app "$app")"
 
-local max_upload_size="$MAX_UPLOAD_SIZE"
+max_upload_size="$MAX_UPLOAD_SIZE"
 
 CONFIG_FOLDER="$DOKKU_ROOT/$APP/nginx.conf.d"
 CONFIG_FILE="$CONFIG_FOLDER/upload.conf"
