@@ -13,7 +13,7 @@ eval "$(config_export app "$app")"
 
 max_upload_size="$MAX_UPLOAD_SIZE"
 
-CONFIG_FOLDER="$DOKKU_ROOT/$APP/nginx.conf.d"
+CONFIG_FOLDER="$DOKKU_ROOT/$app/nginx.conf.d"
 CONFIG_FILE="$CONFIG_FOLDER/upload.conf"
 [[ -d "$CONFIG_FOLDER" ]] || mkdir "$CONFIG_FOLDER"
 
