@@ -18,5 +18,5 @@ sudo dokku plugin:install https://github.com/Zeilenwerk/dokku-nginx-max-upload-s
 ```shell
 # To set a max body size, set the MAX_UPLOAD_SIZE env var
 # If you unset the variable, a default of 2M will be used
-dokku config:set MAX_UPLOAD_SIZE=20M
+dokku config:set {appname} MAX_UPLOAD_SIZE=20M
 ```
